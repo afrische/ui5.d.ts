@@ -2,6 +2,11 @@ declare namespace sap.ui.model {
     class Model {
 
     }
+    class Sorter {
+        constructor(sPath: string, bDescending: boolean, vGroup: boolean | ((any) => any));
+        constructor(sPath: string, vGroup: boolean | ((any) => any));
+
+    }
     namespace odata {
         namespace v2 {
             class ODataModel extends sap.ui.model.Model {
