@@ -329,6 +329,24 @@ declare namespace sap.ui.core {
     class Component {
 
     }
+    class Item extends Element {
+        // Getter for property enabled. 
+        getEnabled();
+        // Getter for property key. 
+        getKey();
+        // Getter for property text. 
+        getText();
+        // Getter for property textDirection. 
+        getTextDirection();
+        // Setter for property enabled. 
+        setEnabled(bEnabled);
+        // Setter for property key. 
+        setKey(sKey);
+        // Setter for property text. 
+        setText(sText);
+        // Setter for property textDirection. 
+        setTextDirection(sTextDirection);
+    }
     class Control extends Element {
         // The string given as "sStyleClass" will be added to the "class" attribute of this control's root HTML element.
         addStyleClass(sStyleClass: string);
@@ -373,7 +391,7 @@ declare namespace sap.ui.core {
         onBeforeRendering();
 
         // Puts this control into the specified container (oRef) at the given position (oPosition).
-        placeAt(oRef, oPosition);
+        placeAt(oRef: string | Element | sap.ui.core.Control, oPosition?: string | number);
 
         // Removes the given string from the list of custom style classes that have been set previously.
         removeStyleClass(sStyleClass: string);
