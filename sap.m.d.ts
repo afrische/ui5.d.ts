@@ -138,6 +138,10 @@ declare namespace sap.m {
         // Setter for property selected.
         setSelected(bSelected);
     }
+    class Tile extends sap.ui.core.Control {
+    }
+    class StandardTile extends Tile {
+    }
     class ViewSettingsCustomTab extends sap.ui.core.Item {
 
     }
