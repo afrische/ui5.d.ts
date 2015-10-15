@@ -31,7 +31,7 @@ declare namespace sap.ui.core {
     /**
      * Core Class of the SAP UI Library.
      */
-    class Core {
+    class Core extends sap.ui.base.Object {
         // Enforces an immediate update of the visible UI (aka "rendering").
         applyChanges();
 

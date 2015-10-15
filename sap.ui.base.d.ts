@@ -1,4 +1,64 @@
 declare namespace sap.ui.base {
+    class MetaData {
+        // Returns an array with the names of all public methods declared by the described class and its ancestors. 
+        getAllPublicMethods();
+        // Returns the (constructor of the) described class 
+        getClass();
+        // Returns the fully qualified name of the described class 
+        getName();
+        // Returns the metadata object of the base class of the described class or null if the class has no (documented) base class. 
+        getParent();
+        // Returns an array with the names of the public methods declared by the described class. 
+        getPublicMethods();
+        // Returns whether the described class is abstract 
+        isAbstract();
+        // Whether the described class is deprecated and should not be used any more 
+        isDeprecated();
+        // Returns whether the described class is final 
+        isFinal();
+        // Checks whether the described class or one of its ancestor classes implements the given interface. 
+        isInstanceOf(sInterface);
+    }
+    abstract class Object {
+        // Destructor method for objects 
+        destroy();
+        // Returns the public interface of the object. 
+        getInterface();
+        // Returns the metadata for the class that this object belongs to. 
+        getMetadata(): MetaData;
+    }
+    abstract class EventProvider extends Object {
+        // Adds an event registration for the given object and given event name 
+        attachEvent(sEventId, fnFunction, oListener?);
+        attachEvent(sEventId, oData, fnFunction, oListener?);
+        // Adds a one time event registration for the given object and given event name.
+        attachEventOnce(sEventId, fnFunction, oListener?);
+        attachEventOnce(sEventId, oData, fnFunction, oListener?);
+        //
+        destroy();
+        // Removes an event registration for the given object and given event name. 
+        detachEvent(sEventId, fnFunction, oListener?);
+        // Fires the given event and notifies all listeners. 
+        fireEvent(sEventId, mParameters?, bAllowPreventDefault?, bEnableEventBubbling?);
+        // Returns the parent in the eventing hierarchy of this object. 
+        getEventingParent();
+        // Returns a string representation of this object. 
+        toString();
+    }
+    class Event extends Object {
+        // Cancel bubbling of the event. 
+        cancelBubble();
+        // Returns the id of the event 
+        getId();
+        // Returns the value of the parameter with the given sName. 
+        getParameter(sName);
+        // Returns all parameter values of the event keyed by their names. 
+        getParameters();
+        // Returns the source of the event 
+        getSource(): EventProvider;
+        // Prevent the default action of this event. 
+        preventDefault();
+    }
     class ManagedObject {
         // Adds some entity oObject to the aggregation identified by sAggregationName. 
         addAggregation(sAggregationName, oObject, bSuppressInvalidate?);
