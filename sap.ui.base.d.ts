@@ -20,6 +20,8 @@ declare namespace sap.ui.base {
         isInstanceOf(sInterface);
     }
     abstract class Object {
+        //Creates a subclass of class sap.ui.base.Object with name sClassName and enriches it with the information contained in oClassInfo.
+        static extend(sClassName: string, oClassInfo?, FNMetaImpl?);
         // Destructor method for objects 
         destroy();
         // Returns the public interface of the object. 
@@ -59,7 +61,7 @@ declare namespace sap.ui.base {
         // Prevent the default action of this event. 
         preventDefault();
     }
-    class ManagedObject {
+    class ManagedObject extends EventProvider {
         // Adds some entity oObject to the aggregation identified by sAggregationName. 
         addAggregation(sAggregationName, oObject, bSuppressInvalidate?);
 

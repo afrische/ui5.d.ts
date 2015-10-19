@@ -326,25 +326,105 @@ declare namespace sap.ui.core {
         // Removes the defined binding context of this object, all bindings will now resolve relative to the parent context again.
         unbindElement(sModelName);
     }
-    class Component {
 
+    class Component extends sap.ui.base.ManagedObject {
+        // Cleans up the component instance before destruction. 
+        exit();
+
+        // Returns user specific data object
+        getComponentData();
+
+        // Returns the event bus of this component.
+        getEventBus();
+
+        //
+        getInterface();
+
+        // Initializes the Component instance after creation.
+        init();
+
+        // The hook which gets called when the static configuration of the component has been changed by some configuration extension.
+        onConfigChange(sConfigKey);
+
+        // The window error hook.
+        onError(sMessage, sFile, iLine);
+
+        // The window before unload hook.
+        onWindowBeforeUnload();
+
+        // The window unload hook.
+        onWindowUnload();
+
+        // Calls the function fn once and marks all ManagedObjects created during that call as "owned" by this Component.
+        runAsOwner(fn);
+    }
+
+    class UIComponent extends Component {
+        //Returns the reference to the router instance.
+        static getRouterFor(oControllerOrView): sap.ui.core.routing.Router;
+
+        // Returns an Element by its id in the context of the Component
+        byId(sId);
+
+        // The method to create the Content (UI Control Tree) of the Component.
+        createContent();
+
+        // Creates an id for an Element prefixed with the component id
+        createId(sId);
+
+        // A method to be implemented by UIComponents, returning the flag whether to prefix the IDs of controls automatically or not if the controls are created inside the sap.ui.core.UIComponent#createContent function.
+        getAutoPrefixId();
+
+        //
+        getEventingParent();
+
+        // Returns the reference to the router instance which has been created by the UIComponent once the routes in the routing metadata has been defined.
+        getRouter();
+
+        // Returns the reference to the targets instance which has been created by the UIComponent once the targets in the routing metadata has been defined.
+        getTargets();
+
+        // Returns the reference to the UIArea of the container.
+        getUIArea();
+
+        // Initializes the Component instance after creation.
+        init();
+
+        // Function is called when the rendering of the Component Container is completed.
+        onAfterRendering();
+
+        // Function is called when the rendering of the Component Container is started.
+        onBeforeRendering();
+
+        // Renders the the root control of the UIComponent.
+        render(oRenderManager);
+
+        // Sets the reference to the ComponentContainer - later required for the determination of the UIArea for the UIComponent.
+        setContainer(oContainer);
     }
     class Item extends Element {
         // Getter for property enabled. 
         getEnabled();
-        // Getter for property key. 
+
+        // Getter for property key.
         getKey();
-        // Getter for property text. 
+
+        // Getter for property text.
         getText();
-        // Getter for property textDirection. 
+
+        // Getter for property textDirection.
         getTextDirection();
-        // Setter for property enabled. 
+
+        // Setter for property enabled.
         setEnabled(bEnabled);
-        // Setter for property key. 
+
+        // Setter for property key.
         setKey(sKey);
-        // Setter for property text. 
+
+        // Setter for property text.
         setText(sText);
-        // Setter for property textDirection. 
+
+        // Setter for property textDirection.
         setTextDirection(sTextDirection);
     }
     class Control extends Element {
@@ -532,6 +612,9 @@ declare namespace sap.ui.core {
             getAutoPrefixId();
         }
         class Controller {
+            //Creates a subclass of class with name sClassName and enriches it with the information contained in oClassInfo.
+            static extend(sClassName: string, oClassInfo?, FNMetaImpl?);
+
             // Called when a view is instantiated and its controls (if available) have already been created; used to modify the view before it is displayed to bind event handlers and do other one-time initialization
             onInit();
 
@@ -556,6 +639,120 @@ declare namespace sap.ui.core {
 
             // Returns the view associated with this controller or undefined.
             getView(): sap.ui.core.mvc.View;
+        }
+    }
+    namespace routing {
+        class HashChanger {
+        }
+        class History {
+            /**
+             * @returns a global singleton that gets created as soon as the sap.ui.core.routing.History is required
+             */
+            static getInstance(): History;
+
+            // Determines what the navigation direction for a newly given hash would be It will say Unknown if there is a history foo - bar (current history) - foo If you now ask for the direction of the hash "foo" you get Unknown because it might be backwards or forwards.
+            getDirection(sNewHash?): HistoryDirection;
+
+            // gets the previous hash in the history - if the last direction was Unknown or there was no navigation yet, undefined will be returned
+            getPreviousHash(): string;
+        }
+        class HistoryDirection {
+        }
+        class Route {
+        }
+        class Router {
+            // Adds a route to the router 
+            addRoute(oConfig, oParent);
+
+            // Attach event-handler fnFunction to the 'bypassed' event of this sap.ui.core.routing.Router.
+            attachBypassed(fnFunction, oListener?);
+            attachBypassed(oData, fnFunction, oListener?);
+
+            // Attach event-handler fnFunction to the 'routeMatched' event of this sap.ui.core.routing.Router.
+            attachRouteMatched(fnFunction, oListener?);
+            attachRouteMatched(oData, fnFunction, oListener?);
+
+            // Attach event-handler fnFunction to the 'routePatternMatched' event of this sap.ui.core.routing.Router.
+            attachRoutePatternMatched(fnFunction, oListener?);
+            attachRoutePatternMatched(oData, fnFunction, oListener?);
+
+            // Removes the router from the hash changer @see sap.ui.core.routing.HashChanger
+            destroy();
+
+            // Detach event-handler fnFunction from the 'bypassed' event of this sap.ui.core.routing.Router.
+            detachBypassed(fnFunction, oListener);
+
+            // Detach event-handler fnFunction from the 'routeMatched' event of this sap.ui.core.routing.Router.
+            detachRouteMatched(fnFunction, oListener);
+
+            // Detach event-handler fnFunction from the 'routePatternMatched' event of this sap.ui.core.routing.Router.
+            detachRoutePatternMatched(fnFunction, oListener);
+
+            // Fire event bypassed to attached listeners.
+            fireBypassed(mArguments?);
+
+            // Fire event routeMatched to attached listeners.
+            fireRouteMatched(mArguments?);
+
+            // Fire event routePatternMatched to attached listeners.
+            fireRoutePatternMatched(mArguments?);
+
+            // Returns the Route with a name, if no route is found undefined is returned
+            getRoute(sName);
+
+            // Returns the instance of Targets, if you pass a targets config to the router
+            getTargets(): Targets;
+
+            // Returns the URL for the route and replaces the placeholders with the values in oParameters
+            getURL(sName, oParameters);
+
+            // Returns the views instance created by the router
+            getViews();
+
+            // Attaches the router to the hash changer @see sap.ui.core.routing.HashChanger
+            initialize();
+
+            // Navigates to a specific route defining a set of parameters.
+            navTo(sName, oParameters, bReplace);
+
+            // Will trigger routing events + place targets for routes matching the string
+            parse(sNewHash);
+
+            // Registers the router to access it from another context.
+            register(sName);
+
+            // Stops to listen to the hashChange of the browser.
+            stop();
+        }
+        class Target {
+            // Attach event-handler fnFunction to the 'display' event of this sap.ui.core.routing.Target. 
+            attachDisplay(fnFunction, oListener?);
+            attachDisplay(oData, fnFunction, oListener?);
+
+            // Destroys the target, will be called by sap.m.routing.Targets don't call this directly.
+            destroy();
+
+            // Detach event-handler fnFunction from the 'display' event of this sap.ui.core.routing.Target.
+            detachDisplay(fnFunction, oListener);
+
+            // Creates a view and puts it in an aggregation of a control that has been defined in the undefined.
+            display(vData?);
+
+            // Fire event created to attached listeners.
+            fireDisplay(mArguments?);
+        }
+        class Targets {
+            // Attach event-handler fnFunction to the 'display' event of this sap.ui.core.routing.Targets. 
+            attachDisplay(fnFunction, oListener?);
+            attachDisplay(oData, fnFunction, oListener?);
+
+            // Destroys the targets instance an all created targets.
+            destroy();
+
+            // Creates a view and puts it in an aggregation of the specified control.
+            display(vTargets, vData?);
+        }
+        class Views {
         }
     }
 }
