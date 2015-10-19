@@ -5,16 +5,28 @@
 ///<reference path="sap.ui.model.d.ts"/>
 ///<reference path="sap.m.d.ts"/>
 declare namespace sap.ui {
+    interface ComponentConfig {
+        // 	the name of the Component to load
+        name: string;
+        // 	an alternate location from where to load the Component
+        url?: string;
+        // 	initial data of the Component (@see sap.ui.core.Component#getComponentData)
+        componentData?: any;
+        // 	the sId of the new Component
+        id?: string;
+        //	the mSettings of the new Component
+        settings?;
+    }
     //  Creates a new instance of a Component or returns the instance of an existing Component.
-    function component(vConfig);
+    function component(vConfig: string | ComponentConfig): Promise<sap.ui.core.Component> | sap.ui.core.Component;
 
     //  Defines a controller class or creates an instance of an already defined controller class.
     function controller(sName: string, oControllerImpl?): void | sap.ui.core.mvc.Controller;
 
     //  Defines a Javascript module with its name, its dependencies and a module value or factory.
-    function define(vFactory, bExport?: boolean);
-    function define(aDependencies, vFactory, bExport?: boolean);
-    function define(sModuleName: string, aDependencies, vFactory, bExport?: boolean);
+    function define(vFactory);
+    function define(aDependencies, vFactory);
+    function define(sModuleName: string, aDependencies, vFactory);
 
     //  Creates 0.
     function extensionpoint(oContainer, sExtName: string, fnCreateDefaultContent?, oTargetControl?, sAggregationName?: string);
