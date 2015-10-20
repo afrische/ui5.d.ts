@@ -108,7 +108,7 @@ declare namespace sap.m {
         setWidth(sWidth);
 
         // Navigates to the next page (with drill-down semantic) with the given (or default) animation.
-        to(sPageId: string, sTransitionName?: string, oData?, oTransitionParameters?);
+        to(sPageId:string, sTransitionName?:string, oData?, oTransitionParameters?);
     }
     class App extends NavContainer {
 
@@ -127,8 +127,8 @@ declare namespace sap.m {
         app: sap.ui.core.Control
     }
     class Shell extends sap.ui.core.Control {
-        constructor(sId?: string, mSettings?: SapMShellOptions);
-        constructor(mSettings: SapMShellOptions);
+        constructor(sId?:string, mSettings?:SapMShellOptions);
+        constructor(mSettings:SapMShellOptions);
 
     }
     class ViewSettingsItem extends sap.ui.core.Item {
@@ -159,8 +159,8 @@ declare namespace sap.m {
         resetFilters?: any
     }
     class ViewSettingsDialog extends sap.ui.core.Control {
-        constructor(sId?: string, mSettings?: SapMViewSettingsDialogOptions);
-        constructor(mSettings?: SapMViewSettingsDialogOptions);
+        constructor(sId?:string, mSettings?:SapMViewSettingsDialogOptions);
+        constructor(mSettings?:SapMViewSettingsDialogOptions);
 
         // Adds some filterItem into the aggregation named filterItems. 
         addFilterItem(oFilterItem);
@@ -307,7 +307,7 @@ declare namespace sap.m {
         insertSortItem(oSortItem, iIndex);
 
         // Opens the view settings dialog relative to the parent control
-        open(the);
+        open(sPageId?:string);
 
         // Removes all the controls in the aggregation named customTabs.
         removeAllCustomTabs();
@@ -370,6 +370,6 @@ declare namespace sap.m {
         unbindSortItems();
     }
     namespace MessageToast {
-        function show(sMessage: string, mOptions?): void;
+        function show(sMessage:string, mOptions?):void;
     }
 }
