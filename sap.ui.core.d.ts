@@ -713,7 +713,7 @@ declare namespace sap.ui.core {
             initialize();
 
             // Navigates to a specific route defining a set of parameters.
-            navTo(sName, oParameters, bReplace);
+            navTo(sName, oParameters?, bReplace?);
 
             // Will trigger routing events + place targets for routes matching the string
             parse(sNewHash);
