@@ -158,6 +158,41 @@ declare namespace sap.m {
         cancel?: any
         resetFilters?: any
     }
+    interface ViewSettingsItemConfirmEventParameter {
+        /**
+         * The selected sort item.
+         */
+        sortItem?:sap.m.ViewSettingsItem;
+        /**
+         * The selected sort order (true = descending, false = ascending).
+         */
+        sortDescending?:boolean;
+        /**
+         * The selected group item.
+         */
+        groupItem?:sap.m.ViewSettingsItem;
+        /**
+         * The selected group order (true = descending, false = ascending).
+         */
+        groupDescending?:boolean;
+        /**
+         * The selected preset filter item.
+         */
+        presetFilterItem?:sap.m.ViewSettingsItem;
+        /**
+         * The selected filters in an array of ViewSettingsItem.
+         */
+        filterItems?:sap.m.ViewSettingsItem[];
+        /**
+         * The selected filter items in an object notation format: { key: boolean }. If a custom control filter was displayed (for example, the user clicked on the filter item), the value for its key is set to true to indicate that there has been an interaction with the control.
+         */
+        filterKeys?:any;
+        /**
+         * The selected filter items in a string format to display in the control's header bar in format "Filtered by: key (subkey1, subkey2, subkey3)".
+         */
+        filterString?:string;
+        id:string;
+    }
     class ViewSettingsDialog extends sap.ui.core.Control {
         constructor(sId?:string, mSettings?:SapMViewSettingsDialogOptions);
         constructor(mSettings?:SapMViewSettingsDialogOptions);

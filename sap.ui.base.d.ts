@@ -1,64 +1,87 @@
 declare namespace sap.ui.base {
+    import ViewSettingsItemConfirmEventParameter = sap.m.ViewSettingsItemConfirmEventParameter;
     class MetaData {
         // Returns an array with the names of all public methods declared by the described class and its ancestors. 
         getAllPublicMethods();
-        // Returns the (constructor of the) described class 
+
+        // Returns the (constructor of the) described class
         getClass();
-        // Returns the fully qualified name of the described class 
+
+        // Returns the fully qualified name of the described class
         getName();
-        // Returns the metadata object of the base class of the described class or null if the class has no (documented) base class. 
+
+        // Returns the metadata object of the base class of the described class or null if the class has no (documented) base class.
         getParent();
-        // Returns an array with the names of the public methods declared by the described class. 
+
+        // Returns an array with the names of the public methods declared by the described class.
         getPublicMethods();
-        // Returns whether the described class is abstract 
+
+        // Returns whether the described class is abstract
         isAbstract();
-        // Whether the described class is deprecated and should not be used any more 
+
+        // Whether the described class is deprecated and should not be used any more
         isDeprecated();
-        // Returns whether the described class is final 
+
+        // Returns whether the described class is final
         isFinal();
-        // Checks whether the described class or one of its ancestor classes implements the given interface. 
+
+        // Checks whether the described class or one of its ancestor classes implements the given interface.
         isInstanceOf(sInterface);
     }
     abstract class Object {
         //Creates a subclass of class sap.ui.base.Object with name sClassName and enriches it with the information contained in oClassInfo.
-        static extend(sClassName: string, oClassInfo?, FNMetaImpl?);
-        // Destructor method for objects 
+        static extend(sClassName:string, oClassInfo?, FNMetaImpl?);
+
+        // Destructor method for objects
         destroy();
-        // Returns the public interface of the object. 
+
+        // Returns the public interface of the object.
         getInterface();
-        // Returns the metadata for the class that this object belongs to. 
-        getMetadata(): MetaData;
+
+        // Returns the metadata for the class that this object belongs to.
+        getMetadata():MetaData;
     }
     abstract class EventProvider extends Object {
         // Adds an event registration for the given object and given event name 
         attachEvent(sEventId, fnFunction, oListener?);
         attachEvent(sEventId, oData, fnFunction, oListener?);
+
         // Adds a one time event registration for the given object and given event name.
         attachEventOnce(sEventId, fnFunction, oListener?);
         attachEventOnce(sEventId, oData, fnFunction, oListener?);
+
         //
         destroy();
-        // Removes an event registration for the given object and given event name. 
+
+        // Removes an event registration for the given object and given event name.
         detachEvent(sEventId, fnFunction, oListener?);
-        // Fires the given event and notifies all listeners. 
+
+        // Fires the given event and notifies all listeners.
         fireEvent(sEventId, mParameters?, bAllowPreventDefault?, bEnableEventBubbling?);
-        // Returns the parent in the eventing hierarchy of this object. 
+
+        // Returns the parent in the eventing hierarchy of this object.
         getEventingParent();
-        // Returns a string representation of this object. 
+
+        // Returns a string representation of this object.
         toString();
     }
     class Event extends Object {
         // Cancel bubbling of the event. 
         cancelBubble();
-        // Returns the id of the event 
+
+        // Returns the id of the event
         getId();
-        // Returns the value of the parameter with the given sName. 
+
+        // Returns the value of the parameter with the given sName.
         getParameter(sName);
-        // Returns all parameter values of the event keyed by their names. 
-        getParameters();
-        // Returns the source of the event 
-        getSource(): EventProvider;
-        // Prevent the default action of this event. 
+
+        // Returns all parameter values of the event keyed by their names.
+        getParameters():ViewSettingsItemConfirmEventParameter | {};
+
+        // Returns the source of the event
+        getSource():EventProvider;
+
+        // Prevent the default action of this event.
         preventDefault();
     }
     class ManagedObject extends EventProvider {
@@ -185,7 +208,7 @@ declare namespace sap.ui.base {
         insertAggregation(sAggregationName, oObject, iIndex, bSuppressInvalidate?);
 
         // This triggers rerendering of itself and its children.
-        invalidate(): void;
+        invalidate():void;
 
         // Find out whether a property or aggregation is bound
         isBound(sName);
