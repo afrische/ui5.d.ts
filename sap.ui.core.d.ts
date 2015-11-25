@@ -1,31 +1,6 @@
-interface SapUiCoreStatic {
-    mvc: SapUiCoreMvcStatic;
-    control: SapUiCoreControlStatic;
-}
-interface SapUiCoreMvcStatic {
-    View: SapUiCoreMvcViewStatic;
-    JSView: SapUiCoreMvcJsViewStatic;
-}
-interface SapUiCoreMvcViewStatic {
-    // Creates a new subclass of class sap.ui.core.mvc.View with name sClassName and enriches it with the information contained in oClassInfo.
-    extend(sClassName: string, oClassInfo?, FNMetaImpl?);
-    // Returns a metadata object for class sap.ui.core.mvc.View.
-    getMetadata();
-    // Register a preprocessor for all views of a specific type.
-    registerPreprocessor(sType: string, vPreprocessor, sViewType: string, bSyncSupport: boolean, bOnDemand?: boolean, mSettings?);
-}
-interface SapUiCoreMvcJsViewStatic {
-    // Creates a new subclass of class sap.ui.core.mvc.View with name sClassName and enriches it with the information contained in oClassInfo.
-    extend(sClassName: string, oClassInfo?, FNMetaImpl?);
-    // Returns a metadata object for class sap.ui.core.mvc.View.
-    getMetadata();
-}
-interface SapUiCoreControlStatic {
-    // Creates a new subclass of class sap.ui.core.mvc.View with name sClassName and enriches it with the information contained in oClassInfo.
-    extend(sClassName: string, oClassInfo?, FNMetaImpl?);
-    // Returns a metadata object for class sap.ui.core.control.
-    getMetadata();
-}
+///<reference path="sap.ui.core.mvc.d.ts"/>
+///<reference path="sap.ui.core.routing.d.ts"/>
+///<reference path="sap.ui.core.message.d.ts"/>
 
 declare namespace sap.ui.core {
     /**
@@ -126,7 +101,7 @@ declare namespace sap.ui.core {
         getLoadedLibraries();
 
         // Returns the active MessageManager instance.
-        getMessageManager();
+        getMessageManager(): sap.ui.core.message.MessageManager;
 
         // Get the model with the given model name.
         getModel(sName?: string);
@@ -326,9 +301,44 @@ declare namespace sap.ui.core {
         // Removes the defined binding context of this object, all bindings will now resolve relative to the parent context again.
         unbindElement(sModelName);
     }
+    class ComponentMetadata extends sap.ui.base.MetaData {
+        /**
+         * Returns the name of the Component (which is the namespace only with the module name)
+         */
+        getComponentName();
 
+        /**
+         * Returns the manifest defined in the metadata of the component.
+         */
+        getManifest();
+
+        /**
+         * Returns the manifest configuration entry with the specified key (Must be a JSON object)
+         */
+        getManifestEntry(sKey, bMerged?);
+
+        /**
+         * Returns the version of the metadata which could be 1 or 2.
+         */
+        getMetadataVersion();
+
+        /**
+         * Returns the raw manifest defined in the metadata of the component.
+         */
+        getRawManifest();
+
+        /**
+         * Returns the version of the component.
+         */
+        getVersion();
+    }
     class Component extends sap.ui.base.ManagedObject {
-        // Cleans up the component instance before destruction. 
+        /**
+         * Returns the metadata for the Component class.
+         */
+        static getMetadata(): ComponentMetadata;
+
+        // Cleans up the component instance before destruction.
         exit();
 
         // Returns user specific data object
@@ -401,6 +411,85 @@ declare namespace sap.ui.core {
 
         // Sets the reference to the ComponentContainer - later required for the determination of the UIArea for the UIComponent.
         setContainer(oContainer);
+    }
+    /**
+     * Embeds standard HTML in a SAPUI5 control tree.
+     * Security Hint: By default, the HTML content (property 'content') is not sanitized and therefore open to XSS attacks.
+     * Applications that want to show user defined input in an HTML control, should either sanitize the content on their own
+     * or activate automatic sanitizing through the sanitizeContent property.
+     *
+     * Although this control inherits the tooltip aggregation/property and the hasStyleClass, addStyleClass, removeStyleClass
+     * and toggleStyleClass methods from its base class, it doesn't support them. Instead, the defined HTML content can contain
+     * a tooltip (title attribute) or custom CSS classes.
+     *
+     * For further hints about usage restrictions for this control, see also the documentation of the content property.
+     */
+    class HTML extends Control {
+        /**
+         * Attaches event handler fnFunction to the 'afterRendering' event of this sap.ui.core.HTML.
+         */
+        attachAfterRendering(fnFunction, oListener?);
+        attachAfterRendering(oData, fnFunction, oListener?);
+
+        /**
+         * Detaches event handler fnFunction from the 'afterRendering' event of this sap.ui.core.HTML.
+         */
+        detachAfterRendering(fnFunction, oListener);
+
+        /**
+         * Fires event afterRendering to attached listeners.
+         */
+        fireAfterRendering(mArguments?);
+
+        /**
+         * Gets current value of property content.
+         */
+        getContent();
+
+        /**
+         *
+         */
+        getDomRef(sSuffix?);
+
+        /**
+         * Gets current value of property preferDOM.
+         */
+        getPreferDOM();
+
+        /**
+         * Gets current value of property sanitizeContent.
+         */
+        getSanitizeContent();
+
+        /**
+         * Gets current value of property visible.
+         */
+        getVisible();
+
+        /**
+         * Sets a new value for property content.
+         */
+        setContent(sContent);
+
+        /**
+         * Sets some new DOM content for this HTML control.
+         */
+        setDOMContent(oDom): HTML;
+
+        /**
+         * Sets a new value for property preferDOM.
+         */
+        setPreferDOM(bPreferDOM);
+
+        /**
+         * Sets a new value for property sanitizeContent.
+         */
+        setSanitizeContent(bSanitizeContent);
+
+        /**
+         * Sets a new value for property visible.
+         */
+        setVisible(bVisible);
     }
     class Item extends Element {
         // Getter for property enabled. 
@@ -492,267 +581,27 @@ declare namespace sap.ui.core {
         toggleStyleClass(sStyleClass: string, bAdd: boolean);
 
     }
-    namespace mvc {
-        class View extends sap.ui.core.Control {
-            // Adds some content into the aggregation named content.
-            addContent(oContent);
-
-            // Attach event handler fnFunction to the 'afterInit' event of this sap.ui.core.mvc.View.
-            attachAfterInit(fnFunction, oListener?);
-            attachAfterInit(oData, fnFunction, oListener?);
-
-            // Attach event handler fnFunction to the 'afterRendering' event of this sap.ui.core.mvc.View.
-            attachAfterRendering(fnFunction, oListener?);
-            attachAfterRendering(oData, fnFunction, oListener?);
-
-            // Attach event handler fnFunction to the 'beforeExit' event of this sap.ui.core.mvc.View.
-            attachBeforeExit(fnFunction, oListener?);
-            attachBeforeExit(oData, fnFunction, oListener?);
-
-            // Attach event handler fnFunction to the 'beforeRendering' event of this sap.ui.core.mvc.View.
-            attachBeforeRendering(fnFunction, oListener?);
-            attachBeforeRendering(oData, fnFunction, oListener?);
-
-            // Returns an Element by its id in the context of the View.
-            byId(sId: string);
-
-            // Override clone method to avoid conflict between generic cloning of content and content creation as defined by the UI5 Model View Controller lifecycle.
-            clone(sIdSuffix?: string, aLocalIds?);
-
-            // Convert the given view local Element id to a globally unique id by prefixing it with the view Id.
-            createId(sId: string);
-
-            // Destroys all the content in the aggregation named content.
-            destroyContent();
-
-            // Detach event handler fnFunction from the 'afterInit' event of this sap.ui.core.mvc.View.
-            detachAfterInit(fnFunction, oListener);
-
-            // Detach event handler fnFunction from the 'afterRendering' event of this sap.ui.core.mvc.View.
-            detachAfterRendering(fnFunction, oListener);
-
-            // Detach event handler fnFunction from the 'beforeExit' event of this sap.ui.core.mvc.View.
-            detachBeforeExit(fnFunction, oListener);
-
-            // Detach event handler fnFunction from the 'beforeRendering' event of this sap.ui.core.mvc.View.
-            detachBeforeRendering(fnFunction, oListener);
-
-            // Fire event afterInit to attached listeners.
-            fireAfterInit(mArguments?);
-
-            // Fire event afterRendering to attached listeners.
-            fireAfterRendering(mArguments?);
-
-            // Fire event beforeExit to attached listeners.
-            fireBeforeExit(mArguments?);
-
-            // Fire event beforeRendering to attached listeners.
-            fireBeforeRendering(mArguments?);
-
-            // Getter for aggregation content.
-            getContent();
-
-            // Returns the view's Controller instance or null for a controller-less View.
-            getController();
-
-            //  An (optional) method to be implemented by Views.
-            getControllerName(): string;
-
-            // Getter for property displayBlock.
-            getDisplayBlock();
-
-            // Getter for property height.
-            getHeight();
-
-            // Returns user specific data object
-            getViewData();
-
-            // Getter for property viewName.
-            getViewName();
-
-            // Getter for property width.
-            getWidth();
-
-            // Checks for the provided sap.ui.core.Control in the aggregation named content.
-            indexOfContent(oContent);
-
-            // Inserts a content into the aggregation named content.
-            insertContent(oContent, iIndex);
-
-            // Creates a Promise representing the state of the view initialization.
-            loaded();
-
-            // Removes all the controls in the aggregation named content.
-            removeAllContent();
-
-            // Removes a content from the aggregation named content.
-            removeContent(vContent);
-
-            // Executes a registered preprocessor at a specified hook.
-            runPreprocessor(sType: string, vSource, bSync?: boolean);
-
-            // Setter for property displayBlock.
-            setDisplayBlock(bDisplayBlock: boolean);
-
-            // Setter for property height.
-            setHeight(sHeight: string);
-
-            // Setter for property viewName.
-            setViewName(sViewName: string);
-
-            // Setter for property width.
-            setWidth(sWidth: string);
-
-        }
-        class JsView extends View {
-            // A method to be implemented by JSViews, returning the View UI.
-            createContent();
-
-            // A method to be implemented by JSViews, returning the flag whether to prefix the IDs of controls automatically or not if the controls are created inside the sap.ui.core.mvc.JSView#createContent function.
-            getAutoPrefixId();
-        }
-        class Controller {
-            //Creates a subclass of class with name sClassName and enriches it with the information contained in oClassInfo.
-            static extend(sClassName: string, oClassInfo?, FNMetaImpl?);
-
-            // Called when a view is instantiated and its controls (if available) have already been created; used to modify the view before it is displayed to bind event handlers and do other one-time initialization
-            onInit();
-
-            // Called when the view is destroyed; used to free resources and finalize activities
-            onExit();
-
-            // Called when the view has been rendered and, therefore, its HTML is part of the document; used to do post-rendering manipulations of the HTML. SAPUI5 controls get this hook after being rendered.
-            onAfterRendering();
-
-            // Invoked before the controller view is re-rendered and not before the first rendering; use onInit() for invoking the hook before the first rendering
-            onBeforeRendering();
-
-            // Returns an Element of the connected view with the given local Id.
-            byId(sId): sap.ui.core.Element;
-
-            // Converts a view local id to a globally unique one by prepending the view id.
-            createId(sId: string): string;
-
-            // Gets the component of the Controllers view
-            // If there is no Component connected to the view or the view is not connected to the controller, undefined is returned.
-            getOwnerComponent(): sap.ui.core.Component;
-
-            // Returns the view associated with this controller or undefined.
-            getView(): sap.ui.core.mvc.View;
-        }
+    class MessageType {
+        /*
+         *Message is an error
+         */
+        static Error: string;
+        /*
+         *Message should be just an information
+         */
+        static Information: string;
+        /*
+         *Message has no specific level
+         */
+        static None: string;
+        /*
+         *Message is an success message
+         */
+        static Success: string;
+        /*
+         *Message is a warning
+         */
+        static Warning: string;
     }
-    namespace routing {
-        class HashChanger {
-        }
-        class History {
-            /**
-             * @returns a global singleton that gets created as soon as the sap.ui.core.routing.History is required
-             */
-            static getInstance(): History;
 
-            // Determines what the navigation direction for a newly given hash would be It will say Unknown if there is a history foo - bar (current history) - foo If you now ask for the direction of the hash "foo" you get Unknown because it might be backwards or forwards.
-            getDirection(sNewHash?): HistoryDirection;
-
-            // gets the previous hash in the history - if the last direction was Unknown or there was no navigation yet, undefined will be returned
-            getPreviousHash(): string;
-        }
-        class HistoryDirection {
-        }
-        class Route {
-        }
-        class Router {
-            // Adds a route to the router 
-            addRoute(oConfig, oParent);
-
-            // Attach event-handler fnFunction to the 'bypassed' event of this sap.ui.core.routing.Router.
-            attachBypassed(fnFunction, oListener?);
-            attachBypassed(oData, fnFunction, oListener?);
-
-            // Attach event-handler fnFunction to the 'routeMatched' event of this sap.ui.core.routing.Router.
-            attachRouteMatched(fnFunction, oListener?);
-            attachRouteMatched(oData, fnFunction, oListener?);
-
-            // Attach event-handler fnFunction to the 'routePatternMatched' event of this sap.ui.core.routing.Router.
-            attachRoutePatternMatched(fnFunction, oListener?);
-            attachRoutePatternMatched(oData, fnFunction, oListener?);
-
-            // Removes the router from the hash changer @see sap.ui.core.routing.HashChanger
-            destroy();
-
-            // Detach event-handler fnFunction from the 'bypassed' event of this sap.ui.core.routing.Router.
-            detachBypassed(fnFunction, oListener);
-
-            // Detach event-handler fnFunction from the 'routeMatched' event of this sap.ui.core.routing.Router.
-            detachRouteMatched(fnFunction, oListener);
-
-            // Detach event-handler fnFunction from the 'routePatternMatched' event of this sap.ui.core.routing.Router.
-            detachRoutePatternMatched(fnFunction, oListener);
-
-            // Fire event bypassed to attached listeners.
-            fireBypassed(mArguments?);
-
-            // Fire event routeMatched to attached listeners.
-            fireRouteMatched(mArguments?);
-
-            // Fire event routePatternMatched to attached listeners.
-            fireRoutePatternMatched(mArguments?);
-
-            // Returns the Route with a name, if no route is found undefined is returned
-            getRoute(sName);
-
-            // Returns the instance of Targets, if you pass a targets config to the router
-            getTargets(): Targets;
-
-            // Returns the URL for the route and replaces the placeholders with the values in oParameters
-            getURL(sName, oParameters);
-
-            // Returns the views instance created by the router
-            getViews();
-
-            // Attaches the router to the hash changer @see sap.ui.core.routing.HashChanger
-            initialize();
-
-            // Navigates to a specific route defining a set of parameters.
-            navTo(sName, oParameters?, bReplace?);
-
-            // Will trigger routing events + place targets for routes matching the string
-            parse(sNewHash);
-
-            // Registers the router to access it from another context.
-            register(sName);
-
-            // Stops to listen to the hashChange of the browser.
-            stop();
-        }
-        class Target {
-            // Attach event-handler fnFunction to the 'display' event of this sap.ui.core.routing.Target. 
-            attachDisplay(fnFunction, oListener?);
-            attachDisplay(oData, fnFunction, oListener?);
-
-            // Destroys the target, will be called by sap.m.routing.Targets don't call this directly.
-            destroy();
-
-            // Detach event-handler fnFunction from the 'display' event of this sap.ui.core.routing.Target.
-            detachDisplay(fnFunction, oListener);
-
-            // Creates a view and puts it in an aggregation of a control that has been defined in the undefined.
-            display(vData?);
-
-            // Fire event created to attached listeners.
-            fireDisplay(mArguments?);
-        }
-        class Targets {
-            // Attach event-handler fnFunction to the 'display' event of this sap.ui.core.routing.Targets. 
-            attachDisplay(fnFunction, oListener?);
-            attachDisplay(oData, fnFunction, oListener?);
-
-            // Destroys the targets instance an all created targets.
-            destroy();
-
-            // Creates a view and puts it in an aggregation of the specified control.
-            display(vTargets, vData?);
-        }
-        class Views {
-        }
-    }
 }

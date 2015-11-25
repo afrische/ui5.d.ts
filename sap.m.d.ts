@@ -1,6 +1,733 @@
-declare namespace sap.m {
-    namespace semantic {
+///<reference path="sap.m.semantic.d.ts"/>
 
+declare namespace sap.m {
+    interface SelectListItemPressEventParameter {
+        // the pressed item
+        item: sap.ui.core.Item;
+    }
+    class SelectList extends sap.ui.core.Control {
+        /**
+         * Adds some ariaLabelledBy into the association named ariaLabelledBy.
+         */
+        addAriaLabelledBy(vAriaLabelledBy);
+
+        /**
+         * Adds some item into the aggregation named items.
+         */
+        addItem(oItem);
+
+        /**
+         * Attaches event handler fnFunction to the 'itemPress' event of this sap.m.SelectList.
+         */
+        attachItemPress(fnFunction, oListener?);
+        attachItemPress(oData, fnFunction, oListener?);
+
+        /**
+         * Attaches event handler fnFunction to the 'selectionChange' event of this sap.m.SelectList.
+         */
+        attachSelectionChange(fnFunction, oListener?);
+        attachSelectionChange(oData, fnFunction, oListener?);
+
+        /**
+         * Binds aggregation items to model data.
+         */
+        bindItems(oBindingInfo);
+
+        /**
+         * Clear the selection.
+         */
+        clearSelection();
+
+        /**
+         * Destroys all the items in the aggregation named items.
+         */
+        destroyItems();
+
+        /**
+         * Detaches event handler fnFunction from the 'itemPress' event of this sap.m.SelectList.
+         */
+        detachItemPress(fnFunction, oListener);
+
+        /**
+         * Detaches event handler fnFunction from the 'selectionChange' event of this sap.m.SelectList.
+         */
+        detachSelectionChange(fnFunction, oListener);
+
+        /**
+         * Fires event itemPress to attached listeners.
+         */
+        fireItemPress(mArguments?);
+
+        /**
+         * Fires event selectionChange to attached listeners.
+         */
+        fireSelectionChange(mArguments?);
+
+        /**
+         * Returns array of IDs of the elements which are the current targets of the ariaLabelledBy association.
+         */
+        getAriaLabelledBy();
+
+        /**
+         * Retrieves the default selected item from the aggregation named items.
+         */
+        getDefaultSelectedItem(aItems?);
+
+        /**
+         * Gets current value of property enabled.
+         */
+        getEnabled();
+
+        /**
+         * Gets the enabled items from the aggregation named items.
+         */
+        getEnabledItems(aItems?);
+
+        /**
+         * Gets the first item from the aggregation named items.
+         */
+        getFirstItem();
+
+        /**
+         * Gets the item from the aggregation named items at the given 0-based index.
+         */
+        getItemAt(iIndex);
+
+        /**
+         * Gets the item with the given key from the aggregation named items.
+         */
+        getItemByKey(sKey);
+
+        /**
+         * Gets content of aggregation items.
+         */
+        getItems();
+
+        /**
+         * Gets the enabled items from the aggregation named items.
+         */
+        getLastItem();
+
+        /**
+         * Gets current value of property maxWidth.
+         */
+        getMaxWidth();
+
+        /**
+         * Gets the selected item object from the aggregation named items.
+         */
+        getSelectedItem();
+
+        /**
+         * Gets current value of property selectedItemId.
+         */
+        getSelectedItemId();
+
+        /**
+         * Gets current value of property selectedKey.
+         */
+        getSelectedKey();
+
+        /**
+         * Gets current value of property showSecondaryValues.
+         */
+        getShowSecondaryValues();
+
+        /**
+         * Gets current value of property width.
+         */
+        getWidth();
+
+        /**
+         * Checks for the provided sap.ui.core.Item in the aggregation named items.
+         */
+        indexOfItem(oItem);
+
+        /**
+         * Inserts a item into the aggregation named items.
+         */
+        insertItem(oItem, iIndex);
+
+        /**
+         * Removes all the controls in the association named ariaLabelledBy.
+         */
+        removeAllAriaLabelledBy();
+
+        /**
+         * Removes all the items in the aggregation named items.
+         */
+        removeAllItems();
+
+        /**
+         * Removes an ariaLabelledBy from the association named ariaLabelledBy.
+         */
+        removeAriaLabelledBy(vAriaLabelledBy);
+
+        /**
+         * Removes an item from the aggregation named items.
+         */
+        removeItem(vItem);
+
+        /**
+         * Sets a new value for property enabled.
+         */
+        setEnabled(bEnabled);
+
+        /**
+         * Sets a new value for property maxWidth.
+         */
+        setMaxWidth(sMaxWidth);
+
+        /**
+         * Sets the selectedItem association.
+         */
+        setSelectedItem(vItem);
+
+        /**
+         * Sets property selectedItemId.
+         */
+        setSelectedItemId(vItem);
+
+        /**
+         * Sets property selectedKey.
+         */
+        setSelectedKey(sKey);
+
+        /**
+         * Updates and synchronizes selectedItem association, selectedItemId and selectedKey properties.
+         */
+        setSelection(vItem);
+
+        /**
+         * Sets a new value for property showSecondaryValues.
+         */
+        setShowSecondaryValues(bShowSecondaryValues);
+
+        /**
+         * Sets a new value for property width.
+         */
+        setWidth(sWidth);
+
+        /**
+         * Unbinds aggregation items from model data.
+         */
+        unbindItems();
+    }
+    class Select extends sap.ui.core.Control {
+        /**
+         * Adds some ariaLabelledBy into the association named ariaLabelledBy.
+         */
+        addAriaLabelledBy(vAriaLabelledBy);
+
+        /**
+         * Adds an item to the aggregation named items.
+         */
+        addItem(oItem);
+
+        /**
+         * Attaches event handler fnFunction to the 'change' event of this sap.m.Select.
+         */
+        attachChange(fnFunction, oListener?);
+        attachChange(oData, fnFunction, oListener?);
+
+        /**
+         * Binds aggregation items to model data.
+         */
+        bindItems(oBindingInfo);
+
+        /**
+         * Closes the control's picker popup.
+         */
+        close();
+
+        /**
+         * Creates a picker popup container where the selection should take place.
+         */
+        createPicker(sPickerType);
+
+        /**
+         * Destroys all the items in the aggregation named items.
+         */
+        destroyItems();
+
+        /**
+         * Detaches event handler fnFunction from the 'change' event of this sap.m.Select.
+         */
+        detachChange(fnFunction, oListener);
+
+        /**
+         * Fires event change to attached listeners.
+         */
+        fireChange(mArguments?);
+
+        /**
+         * Returns array of IDs of the elements which are the current targets of the ariaLabelledBy association.
+         */
+        getAriaLabelledBy();
+
+        /**
+         * Gets current value of property autoAdjustWidth.
+         */
+        getAutoAdjustWidth();
+
+        /**
+         * Gets current value of property enabled.
+         */
+        getEnabled();
+
+        /**
+         * Gets the enabled items from the aggregation named items.
+         */
+        getEnabledItems(aItems?);
+
+        /**
+         * Gets the first item from the aggregation named items.
+         */
+        getFirstItem();
+
+        /**
+         * Gets current value of property icon.
+         */
+        getIcon();
+
+        /**
+         * Gets the item from the aggregation named items at the given 0-based index.
+         */
+        getItemAt(iIndex);
+
+        /**
+         * Gets the item with the given key from the aggregation named items.
+         */
+        getItemByKey(sKey);
+
+        /**
+         * Gets aggregation items.
+         */
+        getItems();
+
+        /**
+         * Gets the last item from the aggregation named items.
+         */
+        getLastItem();
+
+        /**
+         * Gets current value of property maxWidth.
+         */
+        getMaxWidth();
+
+        /**
+         * Gets current value of property name.
+         */
+        getName();
+
+        /**
+         * Gets the selected item object from the aggregation named items.
+         */
+        getSelectedItem();
+
+        /**
+         * Gets current value of property selectedItemId.
+         */
+        getSelectedItemId();
+
+        /**
+         * Gets current value of property selectedKey.
+         */
+        getSelectedKey();
+
+        /**
+         * Gets current value of property textAlign.
+         */
+        getTextAlign();
+
+        /**
+         * Gets current value of property textDirection.
+         */
+        getTextDirection();
+
+        /**
+         * Gets current value of property type.
+         */
+        getType();
+
+        /**
+         * Gets current value of property width.
+         */
+        getWidth();
+
+        /**
+         * Checks for the provided sap.ui.core.Item in the aggregation named items.
+         */
+        indexOfItem(oItem);
+
+        /**
+         * Inserts an item into the aggregation named items.
+         */
+        insertItem(oItem, iIndex);
+
+        /**
+         * Indicates whether the control's picker popup is opened.
+         */
+        isOpen();
+
+        /**
+         * Open the control's picker popup.
+         */
+        open();
+
+        /**
+         * Removes all the controls in the association named ariaLabelledBy.
+         */
+        removeAllAriaLabelledBy();
+
+        /**
+         * Removes all the items in the aggregation named items.
+         */
+        removeAllItems();
+
+        /**
+         * Removes an ariaLabelledBy from the association named ariaLabelledBy.
+         */
+        removeAriaLabelledBy(vAriaLabelledBy);
+
+        /**
+         * Removes an item from the aggregation named items.
+         */
+        removeItem(vItem);
+
+        /**
+         * Sets a new value for property autoAdjustWidth.
+         */
+        setAutoAdjustWidth(bAutoAdjustWidth);
+
+        /**
+         * Sets a new value for property enabled.
+         */
+        setEnabled(bEnabled);
+
+        /**
+         * Sets a new value for property icon.
+         */
+        setIcon(sIcon);
+
+        /**
+         * Sets a new value for property maxWidth.
+         */
+        setMaxWidth(sMaxWidth);
+
+        /**
+         * Sets a new value for property name.
+         */
+        setName(sName);
+
+        /**
+         * Sets the selectedItem association.
+         */
+        setSelectedItem(vItem);
+
+        /**
+         * Sets the selectedItemId property.
+         */
+        setSelectedItemId(vItem);
+
+        /**
+         * Sets property selectedKey.
+         */
+        setSelectedKey(sKey);
+
+        /**
+         * Sets a new value for property textAlign.
+         */
+        setTextAlign(sTextAlign);
+
+        /**
+         * Sets a new value for property textDirection.
+         */
+        setTextDirection(sTextDirection);
+
+        /**
+         * Sets a new value for property type.
+         */
+        setType(sType);
+
+        /**
+         * Sets a new value for property width.
+         */
+        setWidth(sWidth);
+
+        /**
+         * Unbinds aggregation items from model data.
+         */
+        unbindItems();
+    }
+    class MessagePopover extends sap.ui.core.Control {
+        constructor(mSettings?: {
+            items: MessagePopoverItem[] | sap.ui.base.AggregationBindingInfo;
+        });
+
+        /**
+         * Adds some item into the aggregation named items.
+         */
+        addItem(oItem: MessagePopoverItem);
+
+        /**
+         * Attaches event handler fnFunction to the 'afterClose' event of this sap.m.MessagePopover.
+         */
+        attachAfterClose(oData, fnFunction, oListener?);
+        attachAfterClose(fnFunction, oListener?);
+
+        /**
+         * Attaches event handler fnFunction to the 'afterOpen' event of this sap.m.MessagePopover.
+         */
+        attachAfterOpen(oData, fnFunction, oListener?);
+        attachAfterOpen(fnFunction, oListener?);
+
+        /**
+         * Attaches event handler fnFunction to the 'beforeClose' event of this sap.m.MessagePopover.
+         */
+        attachBeforeClose(oData, fnFunction, oListener?);
+        attachBeforeClose(fnFunction, oListener?);
+
+        /**
+         * Attaches event handler fnFunction to the 'beforeOpen' event of this sap.m.MessagePopover.
+         */
+        attachBeforeOpen(oData, fnFunction, oListener?);
+        attachBeforeOpen(fnFunction, oListener?);
+
+        /**
+         * Attaches event handler fnFunction to the 'itemSelect' event of this sap.m.MessagePopover.
+         */
+        attachItemSelect(oData, fnFunction, oListener?);
+        attachItemSelect(fnFunction, oListener?);
+
+        /**
+         * Attaches event handler fnFunction to the 'listSelect' event of this sap.m.MessagePopover.
+         */
+        attachListSelect(oData, fnFunction, oListener?);
+        attachListSelect(fnFunction, oListener?);
+
+        /**
+         * Closes the MessagePopover
+         */
+        close();
+
+        /**
+         * Destroys all the items in the aggregation named items.
+         */
+        destroyItems();
+
+        /**
+         * Detaches event handler fnFunction from the 'afterClose' event of this sap.m.MessagePopover.
+         */
+        detachAfterClose(fnFunction, oListener);
+
+        /**
+         * Detaches event handler fnFunction from the 'afterOpen' event of this sap.m.MessagePopover.
+         */
+        detachAfterOpen(fnFunction, oListener);
+
+        /**
+         * Detaches event handler fnFunction from the 'beforeClose' event of this sap.m.MessagePopover.
+         */
+        detachBeforeClose(fnFunction, oListener);
+
+        /**
+         * Detaches event handler fnFunction from the 'beforeOpen' event of this sap.m.MessagePopover.
+         */
+        detachBeforeOpen(fnFunction, oListener);
+
+        /**
+         * Detaches event handler fnFunction from the 'itemSelect' event of this sap.m.MessagePopover.
+         */
+        detachItemSelect(fnFunction, oListener);
+
+        /**
+         * Detaches event handler fnFunction from the 'listSelect' event of this sap.m.MessagePopover.
+         */
+        detachListSelect(fnFunction, oListener);
+
+        /**
+         * Fires event afterClose to attached listeners.
+         */
+        fireAfterClose(mArguments?);
+
+        /**
+         * Fires event afterOpen to attached listeners.
+         */
+        fireAfterOpen(mArguments?);
+
+        /**
+         * Fires event beforeClose to attached listeners.
+         */
+        fireBeforeClose(mArguments?);
+
+        /**
+         * Fires event beforeOpen to attached listeners.
+         */
+        fireBeforeOpen(mArguments?);
+
+        /**
+         * Fires event itemSelect to attached listeners.
+         */
+        fireItemSelect(mArguments?);
+
+        /**
+         * Fires event listSelect to attached listeners.
+         */
+        fireListSelect(mArguments?);
+
+        /**
+         * Gets current value of property asyncDescriptionHandler.
+         */
+        getAsyncDescriptionHandler();
+
+        /**
+         * Gets current value of property asyncURLHandler.
+         */
+        getAsyncURLHandler();
+
+        /**
+         * Gets current value of property initiallyExpanded.
+         */
+        getInitiallyExpanded();
+
+        /**
+         * Gets content of aggregation items.
+         */
+        getItems();
+
+        /**
+         * Gets current value of property placement.
+         */
+        getPlacement();
+
+        /**
+         * Checks for the provided sap.m.MessagePopoverItem in the aggregation named items.
+         */
+        indexOfItem(oItem);
+
+        /**
+         * Inserts a item into the aggregation named items.
+         */
+        insertItem(oItem, iIndex);
+
+        /**
+         * The method checks if the MessagePopover is open.
+         */
+        isOpen();
+
+        /**
+         * Opens the MessagePopover
+         */
+        openBy(oControl);
+
+        /**
+         * Removes all the controls in the aggregation named items.
+         */
+        removeAllItems();
+
+        /**
+         * Removes a item from the aggregation named items.
+         */
+        removeItem(vItem);
+
+        /**
+         * Sets a new value for property asyncDescriptionHandler.
+         */
+        setAsyncDescriptionHandler(oAsyncDescriptionHandler);
+
+        /**
+         * Sets a new value for property asyncURLHandler.
+         */
+        setAsyncURLHandler(oAsyncURLHandler);
+
+        /**
+         * Sets a new value for property initiallyExpanded.
+         */
+        setInitiallyExpanded(bInitiallyExpanded);
+
+        /**
+         * This method toggles between open and closed state of the MessagePopover instance.
+         */
+        toggle(oControl);
+    }
+    class MessagePopoverItem extends sap.ui.core.Element {
+        constructor(mSettings?: {
+            /**
+             * Specifies the type of the message
+             */
+            type?: sap.ui.core.MessageType;
+
+            /**
+             * Specifies the title of the message
+             */
+            title?: string;
+
+            /**
+             * Specifies detailed description of the message
+             */
+            description?: string;
+
+            /**
+             * Specifies if description should be interpreted as markup
+             */
+            markupDescription?: boolean;
+
+            /**
+             * Specifies long text description location URL
+             */
+            longtextUrl?: string;
+        });
+
+        /**
+         * Gets current value of property description.
+         */
+        getDescription();
+
+        /**
+         * Gets current value of property longtextUrl.
+         */
+        getLongtextUrl();
+
+        /**
+         * Gets current value of property markupDescription.
+         */
+        getMarkupDescription();
+
+        /**
+         * Gets current value of property title.
+         */
+        getTitle();
+
+        /**
+         * Gets current value of property type.
+         */
+        getType();
+
+        /**
+         * Sets a new value for property description.
+         */
+        setDescription(sDescription);
+
+        /**
+         * Sets a new value for property longtextUrl.
+         */
+        setLongtextUrl(sLongtextUrl);
+
+        /**
+         * Sets a new value for property markupDescription.
+         */
+        setMarkupDescription(bMarkupDescription);
+
+        /**
+         * Sets a new value for property title.
+         */
+        setTitle(sTitle);
+
+        /**
+         * Sets a new value for property type.
+         */
+        setType(sType);
     }
     class NavContainer extends sap.ui.core.Control {
         // Adds a custom transition to the NavContainer type (not to a particular instance!). 
@@ -108,7 +835,7 @@ declare namespace sap.m {
         setWidth(sWidth);
 
         // Navigates to the next page (with drill-down semantic) with the given (or default) animation.
-        to(sPageId:string, sTransitionName?:string, oData?, oTransitionParameters?);
+        to(sPageId: string, sTransitionName?: string, oData?, oTransitionParameters?);
     }
     class App extends NavContainer {
 
@@ -127,8 +854,8 @@ declare namespace sap.m {
         app: sap.ui.core.Control
     }
     class Shell extends sap.ui.core.Control {
-        constructor(sId?:string, mSettings?:SapMShellOptions);
-        constructor(mSettings:SapMShellOptions);
+        constructor(sId?: string, mSettings?: SapMShellOptions);
+        constructor(mSettings: SapMShellOptions);
 
     }
     class ViewSettingsItem extends sap.ui.core.Item {
@@ -162,40 +889,40 @@ declare namespace sap.m {
         /**
          * The selected sort item.
          */
-        sortItem?:sap.m.ViewSettingsItem;
+        sortItem?: sap.m.ViewSettingsItem;
         /**
          * The selected sort order (true = descending, false = ascending).
          */
-        sortDescending?:boolean;
+        sortDescending?: boolean;
         /**
          * The selected group item.
          */
-        groupItem?:sap.m.ViewSettingsItem;
+        groupItem?: sap.m.ViewSettingsItem;
         /**
          * The selected group order (true = descending, false = ascending).
          */
-        groupDescending?:boolean;
+        groupDescending?: boolean;
         /**
          * The selected preset filter item.
          */
-        presetFilterItem?:sap.m.ViewSettingsItem;
+        presetFilterItem?: sap.m.ViewSettingsItem;
         /**
          * The selected filters in an array of ViewSettingsItem.
          */
-        filterItems?:sap.m.ViewSettingsItem[];
+        filterItems?: sap.m.ViewSettingsItem[];
         /**
          * The selected filter items in an object notation format: { key: boolean }. If a custom control filter was displayed (for example, the user clicked on the filter item), the value for its key is set to true to indicate that there has been an interaction with the control.
          */
-        filterKeys?:any;
+        filterKeys?: any;
         /**
          * The selected filter items in a string format to display in the control's header bar in format "Filtered by: key (subkey1, subkey2, subkey3)".
          */
-        filterString?:string;
-        id:string;
+        filterString?: string;
+        id: string;
     }
     class ViewSettingsDialog extends sap.ui.core.Control {
-        constructor(sId?:string, mSettings?:SapMViewSettingsDialogOptions);
-        constructor(mSettings?:SapMViewSettingsDialogOptions);
+        constructor(sId?: string, mSettings?: SapMViewSettingsDialogOptions);
+        constructor(mSettings?: SapMViewSettingsDialogOptions);
 
         // Adds some filterItem into the aggregation named filterItems. 
         addFilterItem(oFilterItem);
@@ -342,7 +1069,7 @@ declare namespace sap.m {
         insertSortItem(oSortItem, iIndex);
 
         // Opens the view settings dialog relative to the parent control
-        open(sPageId?:string);
+        open(sPageId?: string);
 
         // Removes all the controls in the aggregation named customTabs.
         removeAllCustomTabs();
@@ -405,6 +1132,6 @@ declare namespace sap.m {
         unbindSortItems();
     }
     namespace MessageToast {
-        function show(sMessage:string, mOptions?):void;
+        function show(sMessage: string, mOptions?): void;
     }
 }

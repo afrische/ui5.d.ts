@@ -1,5 +1,4 @@
 declare namespace sap.ui.base {
-    import ViewSettingsItemConfirmEventParameter = sap.m.ViewSettingsItemConfirmEventParameter;
     class MetaData {
         // Returns an array with the names of all public methods declared by the described class and its ancestors. 
         getAllPublicMethods();
@@ -30,7 +29,7 @@ declare namespace sap.ui.base {
     }
     abstract class Object {
         //Creates a subclass of class sap.ui.base.Object with name sClassName and enriches it with the information contained in oClassInfo.
-        static extend(sClassName:string, oClassInfo?, FNMetaImpl?);
+        static extend(sClassName: string, oClassInfo?, FNMetaImpl?);
 
         // Destructor method for objects
         destroy();
@@ -39,7 +38,7 @@ declare namespace sap.ui.base {
         getInterface();
 
         // Returns the metadata for the class that this object belongs to.
-        getMetadata():MetaData;
+        getMetadata(): MetaData;
     }
     abstract class EventProvider extends Object {
         // Adds an event registration for the given object and given event name 
@@ -76,16 +75,66 @@ declare namespace sap.ui.base {
         getParameter(sName);
 
         // Returns all parameter values of the event keyed by their names.
-        getParameters():ViewSettingsItemConfirmEventParameter | {};
+        getParameters(): sap.m.ViewSettingsItemConfirmEventParameter | sap.m.SelectListItemPressEventParameter | {};
 
         // Returns the source of the event
-        getSource():EventProvider;
+        getSource(): EventProvider;
 
         // Prevent the default action of this event.
         preventDefault();
     }
+    interface AggregationBindingInfo {
+        /*
+         * the binding path
+         */
+        path: string;
+        /*
+         * the template to clone for each item in the aggregation
+         */
+        template: sap.ui.base.ManagedObject;
+        /*
+         * , Default: true	option to enable that the template will be shared which means that it won't be destroyed or cloned automatically
+         */
+        templateShareable?: boolean;
+        /*
+         * the factory function
+         */
+        factory?: any;
+        /*
+         * the first entry of the list to be created
+         */
+        startIndex?: number;
+        /*
+         * the amount of entries to be created (may exceed the sizelimit of the model)
+         */
+        length?: number;
+        /*
+         * 	the initial sort order (optional)
+         */
+        sorter?: sap.ui.model.Sorter | sap.ui.model.Sorter[];
+        /*
+         * 	the predefined filters for this aggregation (optional)
+         */
+        filters?: sap.ui.model.Filter[];
+        /*
+         * 	a map of parameters which is passed to the binding
+         */
+        parameters?: any;
+        /*
+         * 	a factory function to generate custom group visualization (optional)
+         */
+        groupHeaderFactory?: any;
+    }
+    class ManagedObjectMetadata extends MetaData {
+
+    }
     class ManagedObject extends EventProvider {
-        // Adds some entity oObject to the aggregation identified by sAggregationName. 
+        /**
+         * Returns the metadata for the ManagedObject class.
+         */
+        static getMetadata(): ManagedObjectMetadata;
+
+        // Adds some entity oObject to the aggregation identified by sAggregationName.
         addAggregation(sAggregationName, oObject, bSuppressInvalidate?);
 
         // Adds some object with the ID sId to the association identified by sAssociationName and marks this ManagedObject as changed.
@@ -111,7 +160,7 @@ declare namespace sap.ui.base {
         attachValidationSuccess(oData, fnFunction, oListener?);
 
         // Bind an aggregation to the model.
-        bindAggregation(sName, oBindingInfo);
+        bindAggregation(sName, oBindingInfo: AggregationBindingInfo): ManagedObject;
 
         // Bind the object to the referenced entity in the model, which is used as the binding context to resolve bound properties or aggregations of the object itself and all of its children relatively to the given path.
         bindObject(vPath, mParameters?);
@@ -180,10 +229,10 @@ declare namespace sap.ui.base {
         getId();
 
         // Returns the metadata for the class that this object belongs to.
-        getMetadata();
+        getMetadata(): ManagedObjectMetadata;
 
         // Get the model to be used for data bindings with the given model name.
-        getModel(sName?);
+        getModel(sName?: string): sap.ui.model.Model;
 
         // Get the object binding object for a specific model
         getObjectBinding(sModelName);
@@ -208,7 +257,7 @@ declare namespace sap.ui.base {
         insertAggregation(sAggregationName, oObject, iIndex, bSuppressInvalidate?);
 
         // This triggers rerendering of itself and its children.
-        invalidate():void;
+        invalidate(): void;
 
         // Find out whether a property or aggregation is bound
         isBound(sName);
@@ -244,7 +293,7 @@ declare namespace sap.ui.base {
         setBindingContext(oContext, sModelName?);
 
         // Sets or unsets a model for the given model name for this ManagedObject.
-        setModel(oModel, sName?);
+        setModel(oModel: sap.ui.model.Model, sName?: string);
 
         // Sets the given value for the given property after validating and normalizing it, marks this object as changed.
         setProperty(sPropertyName, oValue, bSuppressInvalidate?);

@@ -1,11 +1,223 @@
 declare namespace sap.ui.model {
-    class Model {
+    class Filter { }
+    class Model extends sap.ui.core.message.MessageProcessor {
+        /**
+         * Attach event-handler fnFunction to the 'parseError' event of this sap.ui.moel.Model.
+         */
+        attachParseError(fnFunction, oListener?);
+        attachParseError(oData, fnFunction, oListener?);
 
+        /**
+         * Attach event-handler fnFunction to the 'requestCompleted' event of this sap.ui.moel.Model.
+         */
+        attachRequestCompleted(fnFunction, oListener?);
+        attachRequestCompleted(oData, fnFunction, oListener?);
+
+        /**
+         * Attach event-handler fnFunction to the 'requestFailed' event of this sap.ui.moel.Model.
+         */
+        attachRequestFailed(fnFunction, oListener?);
+        attachRequestFailed(oData, fnFunction, oListener?);
+
+        /**
+         * Attach event-handler fnFunction to the 'requestSent' event of this sap.ui.moel.Model.
+         */
+        attachRequestSent(fnFunction, oListener?);
+        attachRequestSent(oData, fnFunction, oListener?);
+
+        /**
+         * Create ContxtBinding
+         */
+        bindContext(sPath, oContext?, mParameters?, oEvents?);
+
+        /**
+         * Implement in inheritig classes
+         */
+        bindList(sPath, oContext?, aSorters?, aFilters?, mParameters?);
+
+        /**
+         * Implement in inheritig classes
+         */
+        bindProperty(sPath, oContext?, mParameters?);
+
+        /**
+         * Implement in inheritig classes
+         */
+        bindTree(sPath, oContext?, aFilters?, mParameters?);
+
+        /**
+         * Implement in inheritig classes
+         */
+        createBindingContext(sPath, oContext?, mParameters?, fnCallBack?, bReload?);
+
+        /**
+         * Destroys the model and clears the model data.
+         */
+        destroy();
+
+        /**
+         * Implement in inheritig classes
+         */
+        destroyBindingContext(oContext);
+
+        /**
+         * Detach event-handler fnFunction from the 'parseError' event of this sap.ui.moel.Model.
+         */
+        detachParseError(fnFunction, oListener);
+
+        /**
+         * Detach event-handler fnFunction from the 'requestCompleted' event of this sap.ui.moel.Model.
+         */
+        detachRequestCompleted(fnFunction, oListener);
+
+        /**
+         * Detach event-handler fnFunction from the 'requestFailed' event of this sap.ui.moel.Model.
+         */
+        detachRequestFailed(fnFunction, oListener);
+
+        /**
+         * Detach event-handler fnFunction from the 'requestSent' event of this sap.ui.moel.Model.
+         */
+        detachRequestSent(fnFunction, oListener);
+
+        /**
+         * Fire event parseError to attached isteners.
+         */
+        fireParseError(mArguments?);
+
+        /**
+         * Fire event requestCompleted to attached isteners.
+         */
+        fireRequestCompleted(mArguments?);
+
+        /**
+         * Fire event requestFailed to attached isteners.
+         */
+        fireRequestFailed(mArguments?);
+
+        /**
+         * Fire event requestSent to attached isteners.
+         */
+        fireRequestSent(mArguments?);
+
+        /**
+         * Get the default binding mode forthe model
+         */
+        getDefaultBindingMode();
+
+        /**
+         * Get message for path
+         */
+        getMessagesByPath(sPath);
+
+        /**
+         * Returns the meta model associated with this model if it is available for the concrete mdel type.
+         */
+        getMetaModel();
+
+        /**
+         * Implement in inheritig classes
+         */
+        getObject(sPath, oContext?);
+
+        /**
+         * Returns the original value for the property with the given path an context.
+         */
+        getOriginalProperty(sPath, oContext?);
+
+        /**
+         * Implement in inheritig classes
+         */
+        getProperty(sPath, oContext?);
+
+        /**
+         * Check if the specified binding mode is supported by he model.
+         */
+        isBindingModeSupported(sMode);
+
+        /**
+         * Returns whether legacy path syntx is used
+         */
+        isLegacySyntax();
+
+        /**
+         * Refresh he model.
+         */
+        refresh(bForceUpdate);
+
+        /**
+         * Set the default binding mode for he model.
+         */
+        setDefaultBindingMode(sMode);
+
+        /**
+         * Enables legacy path syntax handling
+         *  This defines, whether relative bindings, which do not have a defined binding context, should be compatible to earlier releases which means they are resolved relative to the root element or handled strict and stay unresolved until a bindng context is set
+         */
+        setLegacySyntax(bLegacySyntax);
+
+
+        /**
+         * Set messages
+         */
+        setMessages(mMessages);
+
+        /**
+         * Set the maximum number of entries which are used for for listbindings.
+         */
+        setSizeLimit(iSizeLimit);
     }
     class Sorter {
         constructor(sPath: string, bDescending: boolean, vGroup: boolean | ((any) => any));
         constructor(sPath: string, vGroup: boolean | ((any) => any));
 
+    }
+    class ClientModel extends Model {
+        /**
+         *
+         */
+        destroy();
+
+        /**
+         * Force no caching.
+         */
+        forceNoCache(bForceNoCache?);
+
+        /**
+         * Returns the current data of the model.
+         */
+        getData();
+
+        /**
+         * update all bindings
+         */
+        updateBindings(bForceUpdate);
+    }
+    namespace json {
+        class JSONModel extends sap.ui.model.ClientModel {
+            /**
+             * @param oData either the URL where to load the JSON from or a JS object
+             */
+            constructor(oData);
+
+            // Serializes the current JSON data of the model into a string.
+            getJSON();
+
+            // Returns the value for the property with the given sPropertyName
+            getProperty(sPath, oContext?);
+
+            // Load JSON-encoded data from the server using a GET HTTP request and store the resulting JSON data in the model.
+            loadData(sURL, oParameters?, bAsync?, sType?, bMerge?, bCache?, mHeaders?);
+
+            // Sets the JSON encoded data to the model.
+            setData(oData, bMerge?);
+
+            // Sets the JSON encoded string data to the model.
+            setJSON(sJSONText, bMerge?);
+
+            // Sets a new value for the given property sPropertyName in the model.
+            setProperty(sPath, oValue, oContext?, bAsyncUpdate?): boolean;
+        }
     }
     namespace odata {
         namespace v2 {
