@@ -27,7 +27,7 @@ declare namespace sap.ui.core.message {
         /**
          * Add messages to MessageManager
          */
-        addMessages(vMessages);
+        addMessages(vMessages: Message|Message[]);
 
         /**
          * Get the MessageModel
